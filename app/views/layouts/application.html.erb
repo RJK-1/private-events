@@ -2,10 +2,14 @@
 <html>
   <head>
     <% flash.each do |type| %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <% if !notice.nil? %>
+        <p class="notice"><%= notice %></p>
+      <% elsif !alert.nil? %>
+        <p class="alert"><%= alert %></p>
+      <% end %>
     <% end %>
-
+  </head>
+  <body>
     <nav class="navbar is-dark" role="navigation" aria-label="dropdown navigation">
       <div class="navbar-start">
         <%= link_to root_path, class: "navbar-item" do %>
@@ -13,7 +17,7 @@
         <% end %>
       </div>
 
-      <div class="navbar-menu">
+      <div class="navbar-menu is-active">
         <div class="navbar-end">
           <div class="navbar-item">
             <p class="control">
@@ -25,21 +29,41 @@
             </p>
           </div>
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              <%= current_user.name %>
-            </a>
-
-            <div class="navbar-dropdown">
-              <a class="navbar-item">
-                <%= link_to 'My Posts', "/users/#{current_user.id}" %>
+          <% if user_signed_in? %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                <%= current_user.name %>
               </a>
 
-              <a class="navbar-item">
-                <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-              </a>
+              <div class="navbar-dropdown">
+                <div class="navbar-item">
+                  <%= link_to 'My Events', "/users/#{current_user.id}" %>
+                </div>
+                <div class="navbar-item">
+                  <%= link_to 'New Event', new_event_path %>
+                </div>
+                <div class="navbar-item">
+                  <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+                </div>
+              </div>
             </div>
-          </div>
+          <% else %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Join / Log in
+              </a>
+
+              <div class="navbar-dropdown">
+                <div class="navbar-item">
+                  <%= link_to 'Log In', new_user_session_path %>
+                </div>
+
+                <div class="navbar-item">
+                  <%= link_to 'Sign Up', new_user_registration_path %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </nav>
@@ -50,9 +74,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
 
-  <body>
     <%= yield %>
   </body>
 </html>

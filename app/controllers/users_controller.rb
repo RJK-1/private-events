@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     begin
       @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to :events, notice: "User not found!"
+      redirect_to :events, alert: "User not found!"
     end
   end
 end

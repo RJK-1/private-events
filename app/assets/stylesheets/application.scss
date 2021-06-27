@@ -17,10 +17,20 @@
  @import "bulma";
  @import "font-awesome";
 
- .notice {
+ .alert {
    width: 100%;
    height: 27px;
    background-color:rgb(255, 78, 78);
    text-align: center;
    color: white;
  }
+
+ .notice {
+  width: 100%;
+  height: 27px;
+  background-color:rgb(37, 153, 57);
+  text-align: center;
+  color: white;
+}
+
+ .datefield { display: inline }
