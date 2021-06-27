@@ -1,7 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PrivateEvents</title>
+    <% flash.each do |type| %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+
+    <nav class="navbar is-dark" role="navigation" aria-label="dropdown navigation">
+      <div class="navbar-start">
+        <%= link_to root_path, class: "navbar-item" do %>
+          <h1 class="title is-4 has-text-white-bis">Private Events</h1>
+        <% end %>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class="control">
+              <%= link_to root_path, class: "level-item" do %>
+                <span class="icon">
+                  <i class="fa fa-home fa-lg" style="color:white"></i>
+                </span>
+              <% end %>
+            </p>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <%= current_user.name %>
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <%= link_to 'My Posts', "/users/#{current_user.id}" %>
+              </a>
+
+              <a class="navbar-item">
+                <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

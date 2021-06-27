@@ -1,0 +1,31 @@
+<div class="section">
+  <h1 class="title is-2">User's Events</h1><br>
+  
+  <div class="columns is-centered">
+    <div class="column is-two-fifths">
+      <div class="box">
+        <div class="content">
+          <% @user.events.each do |event| %>
+            <% if event.id.to_i % 2 == 0 %>
+              <strong><%= event.name %></strong>
+              <small><%= event.date %></small><br>
+              <small><%= event.description %></small>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="column is-two-fifths">
+      <div class="box">
+        <% @user.events.each do |event| %>
+          <% if event.id.to_i % 2 == 1 %>
+            <strong><%= event.name %></strong>
+            <small><%= event.date %></small><br>
+            <small><%= event.description %></small>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
