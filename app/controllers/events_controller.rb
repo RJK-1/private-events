@@ -15,7 +15,8 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
     if @event.save
-      render "events/show", notice: 'Event created!'
+      redirect_to "/attendees/new/#{@event.id}", notice: 'Event created!'
+      #render "events/show", notice: 'Event created!'
     else
       render :new
     end

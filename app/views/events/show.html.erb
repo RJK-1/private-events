@@ -1,5 +1,6 @@
 <div class="section">
-  <h1 class="title is-2 has-text-dark has-text-centered">Created Event</h1><br>
+<% @event = Event.find(params[:id]) if @event.nil? %>
+  <h1 class="title is-2 has-text-dark has-text-centered"><%= @event.name %></h1><br>
   
   <div class="columns is-centered">
     <div class="column is-three-fifths">
@@ -7,8 +8,18 @@
         <div class="content">
             <strong><%= @event.name %></strong>
             <small><%= @event.date %></small><br>
-            <small><%= @event.description %></small>
-
+            <small><%= @event.description %></small><br><br>
+            <h1 class="title is-5 has-text-dark has-text-centered">Attendees</h1>
+            <% @event.attendees.each do |attendee| %>
+            <div class="content has-text-centered">
+              <%= attendee.username %><br>
+              <% end %>
+            </div>
+            <div class="content has-text-centered">
+              <div class="button is-centered">
+                <%= link_to 'Join Event', "/attendees/new/#{@event.id}" %>
+              </div>
+            </div>
         </div>
       </div>
     </div>

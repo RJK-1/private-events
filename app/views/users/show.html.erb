@@ -1,10 +1,22 @@
 <div class="section">
-  <h1 class="title is-2 has-text-dark has-text-centered"><%= @user.username %>'s Events</h1><br>
-  
+  <h1 class="title is-4 has-text-dark has-text-centered">My Created Events</h1><br>
   <div class="columns is-centered">
+  <% if @user.events.all.length <= 1 %>
+    <% @user.events.each do |event| %>
+      <div class="column is-two-fifths">
+        <div class="box has-background-light">
+          <div class="content">
+            <strong><%= event.name %></strong>
+            <small><%= event.date %></small><br>
+            <small><%= event.description %></small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
     <div class="column is-two-fifths">
       <% @user.events.each do |event| %>
-        <% if event.id.to_i % 2 == 0 %>
+        <% if event.id.to_i % 2 == 1 %>
           <div class="box has-background-light">
             <div class="content">
               <strong><%= event.name %></strong>
@@ -16,15 +28,49 @@
       <% end %>
     </div>
 
-    
     <div class="column is-two-fifths">
       <% @user.events.each do |event| %>
-        <% if event.id.to_i % 2 == 1 %>
+        <% if event.id.to_i % 2 == 0 %>
           <div class="box has-background-light">
             <strong><%= event.name %></strong>
             <small><%= event.date %></small><br>
             <small><%= event.description %></small>
           </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  </div><br><br>
+
+
+  <h1 class="title is-4 has-text-dark has-text-centered">Events signed up for</h1><br>
+  <div class="columns is-centered">
+    <div class="column is-two-fifths">
+      <% @user.attended_events.each do |event| %>
+        <% if event.id.to_i % 2 == 1 %>
+          <% if event.creator.id != @user.id %>
+            <div class="box has-background-light">
+              <div class="content">
+                <strong><%= event.name %></strong>
+                <small><%= event.date %></small><br>
+                <small><%= event.description %></small>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="column is-two-fifths">
+      <% @user.events.each do |event| %>
+        <% if event.id.to_i % 2 == 0 %>
+          <% if event.creator.id != @user.id %>
+            <div class="box has-background-light">
+              <strong><%= event.name %></strong>
+              <small><%= event.date %></small><br>
+              <small><%= event.description %></small>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

@@ -12,6 +12,14 @@
               Created by: <strong><%= event.creator.username %></strong></i><br><br>
               <%= event.description %>
             </div>
+            <div class="content has-text-centered">
+              <div class="button">
+                <%= link_to 'View Event', "/events/#{event.id}" %>
+              </div>
+              <div class="button">
+                <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+              </div>
+            </div>
           </div>
         <% end %>
       <% end %>
@@ -22,10 +30,20 @@
       <% @events.each do |event| %>
         <% if event.id.to_i % 2 == 0 %>
           <div class="box has-background-light">
-            <i>Event name: <strong><%= event.name %></strong><br>
-            Created by: <strong><%= event.date %></strong><br>
-            Created by: <strong><%= event.creator.username %></strong></i><br><br>
-            <%= event.description %>
+            <div class="content">
+              <i>Event name: <strong><%= event.name %></strong><br>
+              Created by: <strong><%= event.date %></strong><br>
+              Created by: <strong><%= event.creator.username %></strong></i><br><br>
+              <%= event.description %>
+            </div>
+            <div class="content has-text-centered">
+              <div class="button">
+                <%= link_to 'View Event', "/events/#{event.id}" %>
+              </div>
+              <div class="button">
+                <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+              </div>
+            </div>
           </div>
         <% end %>
       <% end %>
