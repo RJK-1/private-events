@@ -4,7 +4,7 @@
   <div class="columns is-centered">
     <div class="column is-two-fifths">
       <% @events.each do |event| %>
-        <% if event.id.to_i % 2 == 0 %>
+        <% if event.id.to_i % 2 == 1 %>
           <div class="box has-background-light">
             <div class="content">
               <i>Event name: <strong><%= event.name %></strong><br>
@@ -20,7 +20,7 @@
     
     <div class="column is-two-fifths">
       <% @events.each do |event| %>
-        <% if event.id.to_i % 2 == 1 %>
+        <% if event.id.to_i % 2 == 0 %>
           <div class="box has-background-light">
             <i>Event name: <strong><%= event.name %></strong><br>
             Created by: <strong><%= event.date %></strong><br>
