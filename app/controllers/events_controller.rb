@@ -22,6 +22,12 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy
+    event = Event.find(params[:id])
+    Event.delete(event)
+    redirect_to "/users/#{current_user.id}", alert: 'Event deleted'
+  end
+
   def event_params
     params.require(:event).permit(:name, :date, :description)
   end

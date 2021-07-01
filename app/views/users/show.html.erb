@@ -7,8 +7,27 @@
         <div class="box has-background-light">
           <div class="content">
             <strong><%= event.name %></strong>
-            <small><%= event.date %></small><br>
+            <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
             <small><%= event.description %></small>
+          </div>
+          <div class="content has-text-centered">
+            <div class="button">
+              <%= link_to 'View Event', "/events/#{event.id}" %>
+            </div>
+            <% if user_signed_in? %>
+              <% if current_user.attended_events.include?(event) %>
+                <div class="button is-centered">
+                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                </div>
+              <% else %>
+                <div class="button is-centered">
+                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                </div>
+              <% end %>
+              <div class="button is-centered">
+                <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -20,8 +39,27 @@
           <div class="box has-background-light">
             <div class="content">
               <strong><%= event.name %></strong>
-              <small><%= event.date %></small><br>
+              <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
               <small><%= event.description %></small>
+            </div>
+            <div class="content has-text-centered">
+              <div class="button">
+                <%= link_to 'View Event', "/events/#{event.id}" %>
+              </div>
+              <% if user_signed_in? %>
+                <% if current_user.attended_events.include?(event) %>
+                  <div class="button is-centered">
+                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                  </div>
+                <% else %>
+                  <div class="button is-centered">
+                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                  </div>
+                <% end %>
+                <div class="button is-centered">
+                  <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -32,9 +70,30 @@
       <% @user.events.each do |event| %>
         <% if event.id.to_i % 2 == 0 %>
           <div class="box has-background-light">
-            <strong><%= event.name %></strong>
-            <small><%= event.date %></small><br>
-            <small><%= event.description %></small>
+            <div class="content">
+              <strong><%= event.name %></strong>
+              <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
+              <small><%= event.description %></small>
+            </div>
+            <div class="content has-text-centered">
+              <div class="button">
+                <%= link_to 'View Event', "/events/#{event.id}" %>
+              </div>
+              <% if user_signed_in? %>
+                <% if current_user.attended_events.include?(event) %>
+                  <div class="button is-centered">
+                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                  </div>
+                <% else %>
+                  <div class="button is-centered">
+                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                  </div>
+                <% end %>
+                <div class="button is-centered">
+                  <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
+                </div>
+              <% end %>
+            </div>
           </div>
         <% end %>
       <% end %>
@@ -45,6 +104,7 @@
 
   <h1 class="title is-4 has-text-dark has-text-centered">Events signed up for</h1><br>
   <div class="columns is-centered">
+  
     <div class="column is-two-fifths">
       <% @user.attended_events.each do |event| %>
         <% if event.id.to_i % 2 == 1 %>
@@ -52,10 +112,26 @@
             <div class="box has-background-light">
               <div class="content">
                 <strong><%= event.name %></strong>
-                <small><%= event.date %></small><br>
+                <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
                 <small><%= event.description %></small>
               </div>
+              <div class="content has-text-centered">
+                <div class="button">
+                  <%= link_to 'View Event', "/events/#{event.id}" %>
+                </div>
+                <% if user_signed_in? %>
+                  <% if current_user.attended_events.include?(event) %>
+                    <div class="button is-centered">
+                      <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                    </div>
+                  <% else %>
+                    <div class="button is-centered">
+                      <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                    </div>
+                  <% end %>
+                <% end %>
             </div>
+          </div>
           <% end %>
         <% end %>
       <% end %>
@@ -67,8 +143,24 @@
           <% if event.creator.id != @user.id %>
             <div class="box has-background-light">
               <strong><%= event.name %></strong>
-              <small><%= event.date %></small><br>
+              <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
               <small><%= event.description %></small>
+            </div>
+            <div class="content has-text-centered">
+              <div class="button">
+                <%= link_to 'View Event', "/events/#{event.id}" %>
+              </div>
+              <% if user_signed_in? %>
+                <% if current_user.attended_events.include?(event) %>
+                  <div class="button is-centered">
+                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                  </div>
+                <% else %>
+                  <div class="button is-centered">
+                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                  </div>
+                <% end %>
+              <% end %>
             </div>
           <% end %>
         <% end %>

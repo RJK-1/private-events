@@ -8,7 +8,7 @@
           <div class="box has-background-light">
             <div class="content">
               <i>Event name: <strong><%= event.name %></strong><br>
-              Created by: <strong><%= event.date %></strong><br>
+              Created by: <strong><%= (event.date).strftime("%d/%m/20%y") %></strong><br>
               Created by: <strong><%= event.creator.username %></strong></i><br><br>
               <%= event.description %>
             </div>
@@ -16,14 +16,16 @@
               <div class="button">
                 <%= link_to 'View Event', "/events/#{event.id}" %>
               </div>
-              <% if current_user.attended_events.include?(event) %>
-                <div class="button is-centered">
-                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
-                </div>
-              <% else %>
-                <div class="button is-centered">
-                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-                </div>
+              <% if user_signed_in? %>
+                <% if current_user.attended_events.include?(event) %>
+                  <div class="button is-centered">
+                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                  </div>
+                <% else %>
+                  <div class="button is-centered">
+                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -37,7 +39,7 @@
           <div class="box has-background-light">
             <div class="content">
               <i>Event name: <strong><%= event.name %></strong><br>
-              Created by: <strong><%= event.date %></strong><br>
+              Created by: <strong><%= (event.date).strftime("%d/%m/20%y") %></strong><br>
               Created by: <strong><%= event.creator.username %></strong></i><br><br>
               <%= event.description %>
             </div>
@@ -45,14 +47,16 @@
               <div class="button">
                 <%= link_to 'View Event', "/events/#{event.id}" %>
               </div>
-              <% if current_user.attended_events.include?(event) %>
-                <div class="button is-centered">
-                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
-                </div>
-              <% else %>
-                <div class="button is-centered">
-                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-                </div>
+              <% if user_signed_in? %>
+                <% if current_user.attended_events.include?(event) %>
+                  <div class="button is-centered">
+                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                  </div>
+                <% else %>
+                  <div class="button is-centered">
+                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>
