@@ -1,22 +1,22 @@
 <div class="section">
-  <h1 class="title is-4 has-text-dark has-text-centered">My Created Events</h1><br>
-  <div class="columns is-centered">
-  <% if @user.events.all.length <= 1 %>
-    <% @user.events.each do |event| %>
-      <div class="column is-two-fifths">
+  <div class="columns is-centered is-multiline">
+    <div class="column is-two-fifths">
+    <h1 class="title is-4 has-text-dark has-text-centered">Future Created Events</h1><br>
+      <% event = Event.where("date > ? AND creator_id = ?", Time.now, @user.id) %>
+      <% event.each do |event| %>
         <div class="box has-background-light">
           <div class="content">
             <strong><%= event.name %></strong>
             <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
             <small><%= event.description %></small>
           </div>
-          <div class="content has-text-centered">
+          <div class="content has-text-centered has-text-dark">
             <div class="button">
               <%= link_to 'View Event', "/events/#{event.id}" %>
             </div>
             <% if user_signed_in? %>
               <% if current_user.attended_events.include?(event) %>
-                <div class="button is-centered">
+                <div class="button is-centered has-text-dark">
                   <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
                 </div>
               <% else %>
@@ -25,17 +25,20 @@
                 </div>
               <% end %>
               <div class="button is-centered">
-                <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
+                <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete, data: { confirm: "Are you sure you want to delete this Event?" } %>
               </div>
             <% end %>
           </div>
         </div>
-      </div>
-    <% end %>
-  <% else %>
+      <% end %>
+    
+    </div>
+
     <div class="column is-two-fifths">
-      <% @user.events.each do |event| %>
-        <% if event.id.to_i % 2 == 1 %>
+    <h1 class="title is-4 has-text-dark has-text-centered">Future Joined Events</h1><br>
+      <% event = Event.joins(:events_users).where("attendee_id = ? AND date > ?", @user.id, Time.now) %>
+      <% event.each do |event| %>
+        <% if event.creator.id != @user.id %>
           <div class="box has-background-light">
             <div class="content">
               <strong><%= event.name %></strong>
@@ -56,19 +59,55 @@
                     <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
                   </div>
                 <% end %>
-                <div class="button is-centered">
-                  <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
-                </div>
               <% end %>
-            </div>
           </div>
         <% end %>
       <% end %>
     </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="columns is-centered is-multiline">
+    <div class="column is-two-fifths">
+    <h1 class="title is-4 has-text-dark has-text-centered">Past Created Events</h1><br>
+      <% event = Event.where("date < ? AND creator_id = ?", Time.now, @user.id) %>
+      <% event.each do |event| %>
+        <div class="box has-background-light">
+          <div class="content">
+            <strong><%= event.name %></strong>
+            <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
+            <small><%= event.description %></small>
+          </div>
+          <div class="content has-text-centered has-text-dark">
+            <div class="button">
+              <%= link_to 'View Event', "/events/#{event.id}" %>
+            </div>
+            <% if user_signed_in? %>
+              <% if current_user.attended_events.include?(event) %>
+                <div class="button is-centered has-text-dark">
+                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                </div>
+              <% else %>
+                <div class="button is-centered">
+                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                </div>
+              <% end %>
+              <div class="button is-centered">
+                <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete, data: { confirm: "Are you sure you want to delete this Event?" } %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    
+    </div>
 
     <div class="column is-two-fifths">
-      <% @user.events.each do |event| %>
-        <% if event.id.to_i % 2 == 0 %>
+    <h1 class="title is-4 has-text-dark has-text-centered">Past Joined Events</h1><br>
+      <% event = Event.joins(:events_users).where("attendee_id = ? AND date < ?", @user.id, Time.now) %>
+      <% event.each do |event| %>
+        <% if event.creator.id != @user.id %>
           <div class="box has-background-light">
             <div class="content">
               <strong><%= event.name %></strong>
@@ -89,80 +128,8 @@
                     <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
                   </div>
                 <% end %>
-                <div class="button is-centered">
-                  <%= link_to 'Delete Event', "/events/#{event.id}", method: :delete %>
-                </div>
               <% end %>
-            </div>
           </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
-  </div><br><br>
-
-
-  <h1 class="title is-4 has-text-dark has-text-centered">Events signed up for</h1><br>
-  <div class="columns is-centered">
-  
-    <div class="column is-two-fifths">
-      <% @user.attended_events.each do |event| %>
-        <% if event.id.to_i % 2 == 1 %>
-          <% if event.creator.id != @user.id %>
-            <div class="box has-background-light">
-              <div class="content">
-                <strong><%= event.name %></strong>
-                <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
-                <small><%= event.description %></small>
-              </div>
-              <div class="content has-text-centered">
-                <div class="button">
-                  <%= link_to 'View Event', "/events/#{event.id}" %>
-                </div>
-                <% if user_signed_in? %>
-                  <% if current_user.attended_events.include?(event) %>
-                    <div class="button is-centered">
-                      <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
-                    </div>
-                  <% else %>
-                    <div class="button is-centered">
-                      <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-                    </div>
-                  <% end %>
-                <% end %>
-            </div>
-          </div>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
-
-    <div class="column is-two-fifths">
-      <% @user.events.each do |event| %>
-        <% if event.id.to_i % 2 == 0 %>
-          <% if event.creator.id != @user.id %>
-            <div class="box has-background-light">
-              <strong><%= event.name %></strong>
-              <small><%= (event.date).strftime("%d/%m/20%y") %></small><br>
-              <small><%= event.description %></small>
-            </div>
-            <div class="content has-text-centered">
-              <div class="button">
-                <%= link_to 'View Event', "/events/#{event.id}" %>
-              </div>
-              <% if user_signed_in? %>
-                <% if current_user.attended_events.include?(event) %>
-                  <div class="button is-centered">
-                    <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
-                  </div>
-                <% else %>
-                  <div class="button is-centered">
-                    <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
         <% end %>
       <% end %>
     </div>
