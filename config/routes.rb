@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :events
   resources :users, only: [:show, :create]
   get "/attendees/new/:id", to: "attendees#create"
+  delete "/attendees/:id", to: "attendees#destroy"
 end

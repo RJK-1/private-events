@@ -16,16 +16,21 @@
               <div class="button">
                 <%= link_to 'View Event', "/events/#{event.id}" %>
               </div>
-              <div class="button">
-                <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-              </div>
+              <% if current_user.attended_events.include?(event) %>
+                <div class="button is-centered">
+                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                </div>
+              <% else %>
+                <div class="button is-centered">
+                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>
       <% end %>
     </div>
 
-    
     <div class="column is-two-fifths">
       <% @events.each do |event| %>
         <% if event.id.to_i % 2 == 0 %>
@@ -40,9 +45,15 @@
               <div class="button">
                 <%= link_to 'View Event', "/events/#{event.id}" %>
               </div>
-              <div class="button">
-                <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
-              </div>
+              <% if current_user.attended_events.include?(event) %>
+                <div class="button is-centered">
+                  <%= link_to 'Leave Event', "/attendees/#{event.id}", method: :delete %>
+                </div>
+              <% else %>
+                <div class="button is-centered">
+                  <%= link_to 'Join Event', "/attendees/new/#{event.id}" %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>

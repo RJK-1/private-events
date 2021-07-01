@@ -15,4 +15,10 @@ class AttendeesController < ApplicationController
       redirect_to root_path, alert: "Something went wrong..."
     end
   end
+
+  def destroy
+    attendee = EventsUser.where("attended_event_id = #{params[:id]} AND attendee_id = #{current_user.id}")
+    EventsUser.delete(attendee)
+    redirect_to root_path, alert: "You have left the event"
+  end
 end
