@@ -3,13 +3,24 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @event = Event.new
   end
 
   def new
     @event = current_user.events.build
   end
 
-  def show
+  def edit
+    @event = Event.find(params[:id])
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    if @event.update(event_params)
+      redirect_to @event, notice: "Event updated!"
+    else
+      render :edit, alert: "Something went wrong..."
+    end
   end
 
   def create

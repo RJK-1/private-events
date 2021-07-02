@@ -8,6 +8,7 @@
         <div class="content">
             <strong><%= @event.name %></strong>
             <small><%= (@event.date).strftime("%d/%m/20%y") %></small><br>
+            <small>Event host: <%= @event.creator.username %></small></i><br><br>
             <small><%= @event.description %></small><br><br>
             <h1 class="title is-6 has-text-dark has-text-centered">Attendees</h1>
             <% @event.attendees.each do |attendee| %>

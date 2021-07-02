@@ -1,0 +1,56 @@
+<div class="section">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <h1 class="title is-2 has-text-dark has-text-centered">Edit Event</h1>
+
+        <%= simple_form_for(@event) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="field">
+          <div class="control">
+            <%= f.input :name,
+                    required: true,
+                    autofocus: true,
+                    input_html: { class: "input" },
+                    wrapper: false,
+                    label_html: { class: "label" },
+                    placeholder: "Summer BBQ" %>
+          </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <%= f.input :date,
+                      required: true,
+                      autofocus: false,
+                      input_html: { class: "date" },
+                      wrapper: false,
+                      label_html: { class: "label" }%>
+            </div>
+          </div>
+
+          <div class="field">
+          <div class="control">
+            <%= f.input :description,
+                    required: true,
+                    autofocus: true,
+                    input_html: { class: "textarea" },
+                    wrapper: false,
+                    label_html: { class: "label" },
+                    placeholder: "Enter details, such as time, location, etc, here!" %>
+          </div>
+          </div>
+
+          <div class="field">
+			    <div class="control">
+		 		    <%= f.button :submit, "Submit", class:"button is-dark" %>
+            <div class="button is-dark has-text-light">
+		 		      <%= link_to "Cancel", root_path %>
+            </div>
+		 	    </div>
+		 	    </div>
+		    </div>
+        <% end %>
+    </div>
+  </div>
+</div>
