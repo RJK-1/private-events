@@ -1,24 +1,14 @@
-# README
+Associations project, done through The Odin Project
+https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-on-rails/lessons/associations
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project used many-many associations so that a user could own an event (alias: creator),
+and an event belonged to a creator.
 
-Things you may want to cover:
+It also had users having many events through a join table (alias: attendee),
+and an event having many attendees through the same join table.
 
-* Ruby version
+The project furthered my skills in the MVC model which rails uses, 
+aswell as Gems, including Devise, bulma (CSS framework), font-awesome, simple-forms.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Live preview:
+https://enigmatic-forest-07841.herokuapp.com
